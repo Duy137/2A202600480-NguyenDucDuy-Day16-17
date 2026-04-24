@@ -45,6 +45,13 @@ Một hệ thống tự động tạo video có thể giúp doanh nghiệp tạo
 - **Evidence / proxy evidence:** Bình luận của người xem kiểu "hình ảnh không liên quan", tỷ lệ bỏ xem (drop-off rate) cao khi nội dung khô khan không có hình ảnh bổ trợ đúng lúc.
 - **Why underserved:** Đa số tool auto video hiện tại gán hình stock một cách ngẫu nhiên chỉ dựa trên từ khoá (keyword matching) đơn giản, không thực sự hiểu ngữ cảnh sâu (semantic understanding) của câu nói.
 
+### Need #3: Khả năng tuỳ chỉnh linh hoạt (Human-in-the-loop Customization)
+- **Statement (JTBD):** When AI chọn hình ảnh hoặc phân cảnh chưa đúng ý đồ, I want có thể can thiệp nhanh chóng để tải lên media của riêng tôi hoặc yêu cầu AI tìm kiếm lại, so I can đảm bảo video cuối cùng chính xác 100% nội dung chuyên môn.
+- **Current workaround:** Phải xuất video từ tool AI ra, sau đó đưa vào phần mềm edit truyền thống để cắt bỏ đoạn sai và chèn lại hình mới.
+- **Pain signal:** Sự bực bội khi sử dụng các công cụ AI "hộp đen" (black box) one-click, không cho phép sửa đổi chi tiết trước khi xuất file.
+- **Evidence / proxy evidence:** Nhu cầu có một giao diện "Review & Edit" trực quan từng phân cảnh (scene-by-scene) trước khi tốn thời gian render.
+- **Why underserved:** Nhiều sản phẩm AI tạo video quá chú trọng vào tính tự động hoá 100% (one-click generation) mà bỏ quên nhu cầu kiểm soát (control) và tùy chỉnh (customization) của những người làm nội dung chuyên nghiệp.
+
 ---
 
 ## 4. Strategy Statement
@@ -52,23 +59,24 @@ Một hệ thống tự động tạo video có thể giúp doanh nghiệp tạo
 For **Content Creators và Đội ngũ đào tạo nội bộ (L&D)**
 who struggle with **việc tiêu tốn quá nhiều thời gian và công sức để sản xuất video tin tức/kiến thức**,
 our product helps them **chuyển đổi văn bản thành video hoàn chỉnh chỉ trong vài phút**
-through **hệ thống tự động phân tích ngữ cảnh (LLM) để ghép nối kho dữ liệu hình ảnh/video có sẵn cho khớp với giọng đọc**,
+through **kiến trúc Multi-Agent (Splitter & Director) phân tích ngữ cảnh để chia nhỏ kịch bản và tự động ghép nối kho dữ liệu hình ảnh/video có sẵn**,
 unlike **các phần mềm chỉnh sửa video truyền thống hay các AI tạo video điện ảnh đắt đỏ**,
-because we can leverage **LLM để hiểu sâu văn bản và một luồng lắp ráp tự động (automated assembly pipeline) giúp tối ưu hóa chi phí và thời gian**.
+because we can leverage **LLM chuyên biệt hoá vai trò để hiểu sâu văn bản và một luồng lắp ráp tự động (automated assembly pipeline) kết hợp giao diện Review linh hoạt (Human-in-the-loop) giúp tối ưu hóa chi phí, thời gian mà vẫn giữ quyền kiểm soát cho người dùng**.
 
 ---
 
 ## 5. Moat Hypothesis
 
-**Moat mechanism:** Context-matching Media Engine & Data Network Effect (Động cơ ghép nối hình ảnh theo ngữ cảnh và Hiệu ứng mạng dữ liệu).
+**Moat mechanism:** Context-matching Media Engine, Technical Architecture & Data Network Effect (Động cơ ghép nối hình ảnh theo ngữ cảnh, Kiến trúc kỹ thuật và Hiệu ứng mạng dữ liệu).
 
 If we deploy [N] times in [thị trường creators/L&D], the following improve:
-1. Thuật toán LLM hiểu ngữ cảnh văn bản để tìm và gán hình ảnh/video minh hoạ (B-roll) sẽ ngày càng chính xác và thông minh hơn.
+1. Thuật toán Multi-Agent hiểu ngữ cảnh văn bản để tìm và gán hình ảnh/video minh hoạ (B-roll) sẽ ngày càng chính xác và thông minh hơn nhờ học từ các thao tác re-search và upload custom media của người dùng.
 2. Kho lưu trữ các phân cảnh, template, và metadata (tagging) của stock media nội bộ trở nên phong phú và được tinh chỉnh tốt hơn.
 3. Người dùng sẽ tạo ra các luồng kịch bản mẫu (recipes/templates) và chia sẻ trong cộng đồng, tăng độ gắn kết với nền tảng.
 
 **Why competitors cannot easily replicate this:**
-> Các đối thủ lớn tập trung vào Generative AI (gen ra pixel từ đầu) vốn đòi hỏi chi phí tính toán (compute) khổng lồ và khó kiểm soát đầu ra. Chúng ta tập trung vào bài toán "Retrieval" (truy xuất) và "Assembly" (lắp ráp) thông minh, tạo ra chi phí cực rẻ và tốc độ cực nhanh. Càng nhiều video được tạo và chỉnh sửa bởi người dùng, hệ thống matching văn bản - hình ảnh của chúng ta càng được fine-tune tốt hơn so với đối thủ.
+> 1. **Kỹ thuật:** Các đối thủ lớn tập trung vào Generative AI (gen ra pixel từ đầu) vốn đòi hỏi chi phí tính toán (compute) khổng lồ và khó kiểm soát đầu ra. Chúng ta tập trung vào bài toán "Retrieval" (truy xuất) và "Assembly" (lắp ráp) thông minh kết hợp kiến trúc Multi-Agent (Splitter & Director) phân tách rõ ràng, tạo ra chi phí LLM cực rẻ, tránh lỗi ảo giác và tốc độ render cực nhanh.
+> 2. **Trải nghiệm:** Thay vì "one-click" đóng kín, giao diện Human-in-the-loop cho phép người dùng tùy chỉnh từng scene (thay đổi scene type, tải media riêng, layout fullscreen/cinema) tạo ra rào cản chuyển đổi (switching cost) cao khi họ đã quen với workflow của chúng ta. Càng nhiều video được tạo và chỉnh sửa, hệ thống matching văn bản - hình ảnh càng được fine-tune tốt hơn đối thủ.
 
 ---
 
@@ -95,10 +103,10 @@ If we deploy [N] times in [thị trường creators/L&D], the following improve:
 ## 7. Positioning Note (2 sentences)
 
 **What we are:**
-> Chúng tôi là một cỗ máy tự động hóa quy trình sản xuất, giúp chuyển đổi nhanh chóng bất kỳ kịch bản nào thành một video kiến thức/tin tức hoàn chỉnh, chuyên nghiệp với chi phí cực thấp.
+> Chúng tôi là một cỗ máy tự động hóa quy trình sản xuất (Automated Pipeline) kết hợp giao diện rà soát tinh chỉnh (Human-in-the-loop), giúp chuyển đổi nhanh chóng bất kỳ kịch bản nào thành một video kiến thức/tin tức hoàn chỉnh, chuyên nghiệp với quyền kiểm soát tối đa và chi phí cực thấp.
 
 **What we are not / not yet:**
-> Chúng tôi KHÔNG phải là một công cụ tạo video điện ảnh (như Sora, Runway) hay phần mềm chỉnh sửa video thủ công chuyên sâu để tạo ra các tác phẩm nghệ thuật phức tạp.
+> Chúng tôi KHÔNG phải là một công cụ tạo video điện ảnh (như Sora, Runway), KHÔNG tự vẽ ra video từ pixel, hay phần mềm chỉnh sửa video thủ công chuyên sâu (như Premiere) để tạo ra các tác phẩm nghệ thuật phức tạp.
 
 ---
 
